@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Amazon Scraper</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <div class="container">
+    <h1>Amazon Product Scraper</h1>
+    <form id="scrapeForm">
+      <textarea id="urls" placeholder="Paste product URLs here, one per line..."></textarea>
+      <button type="submit">Scrape and Download</button>
+    </form>
+    <p id="status"></p>
+  </div>
+
+  <script>
+    const form = document.getElementById('scrapeForm');
+    const status = document.getElementById('status');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      status.textContent = 'Scraping... Please wait.';
+
+      const urls = document.getElementById('urls').value.split('\n').map(url => url.trim()).filter(Boolean);
+
+      const response = await fetch('/scrape', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({urls})
+      });
+
+      if (response.ok) {
+        const blob = await response.blob();
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = 'products.xlsx';
+        link.click();
+        status.textContent = 'Download started!';
+      } else {
+        status.textContent = 'Something went wrong. Check your URLs.';
+      }
+    });
+  </script>
+</body>
+</html>
