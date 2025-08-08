@@ -39,7 +39,7 @@ This project demonstrates basic web scraping using Node.js and Express. The fron
 |---------------|----------------|
 | Frontend      | HTML, CSS      |
 | Backend       | Node.js, Express |
-| Web Scraping  | (e.g., axios, cheerio, puppeteer – based on your actual code) |
+| Web Scraping  | (e.g., axios, cheerio, puppeteer ) |
 | Excel Export  | xlsx or exceljs |
 
 ---
